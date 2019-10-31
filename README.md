@@ -5,6 +5,8 @@ Dentro del archivo se encuentran 9 ejemplos de FreeRTOS. Si bien cada uno cumple
 
 
 
+
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA1NzAwMzg0XX0=
+eyJoaXN0b3J5IjpbLTE2ODgwMDUzODAsMTA1NzAwMzg0XX0=
 -->
