@@ -69,7 +69,7 @@ La función xTaskCreate es la encargada de crear la tarea correspondiente para q
 
 La función **xTaskCreate** se encuentra definida en el archivo *task.h* y se lo hace de la forma:
 
-'#define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )'
+`#define xTaskCreate( pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask ) xTaskGenericCreate( ( pvTaskCode ), ( pcName ), ( usStackDepth ), ( pvParameters ), ( uxPriority ), ( pxCreatedTask ), ( NULL ), ( NULL ) )`
 
 Es decir que es otra forma de invocar a la función **xTaskGenericCreate**. Esta se encuentra definida en el archivo *task.c*.
 
