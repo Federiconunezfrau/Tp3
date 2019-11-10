@@ -3,7 +3,13 @@
 
 Dentro del archivo se encuentran 9 ejemplos de FreeRTOS. Si bien cada uno cumple una función diferente, todos comparten ciertas características propias del uso del sistema operativo.
 
-![alt text](img_pto_1/setup_hardware.png)
+<p align="center">
+  <img src="img_pto_1/setup_hardware.png"/>
+</p>
+
+<p align="center">
+  Figura 1: Función donde se configura para el primer uso, a la placa.
+</p>
 
 A continuación se declaran las funciones que, durante la ejecución del programa, representan las tareas que ejecutará el sistema operativo.
 
