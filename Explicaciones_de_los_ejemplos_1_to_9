@@ -1,0 +1,19 @@
+Freertos examples 1 to 9
+
+1: Se crean dos tareas, una enciende un led y emite mensaje "Task1", la otra apaga el led emite el mensaje "Task2". Se invoca a xTaskCreate 2 veces.
+
+2: Se declara una sola tarea que togglea el led e imprime un mensaje que recibe por parámtro (*void Parametro). Se crean dos tareas pero usando la invocación a la misma función, solo que pasándole dos parámetros distintos. En resumen: Se declara una tarea y se crean 2.
+
+3: El sistema está en modo preemptive ==> La tarea de prioridad 2 > 1 se ejecuta SIEMPRE
+
+4: Se crean dos tareas idénticas pero con retardo de xTaskDelay, es decir, que se suspende la tarea hasta que se vence el timer.
+
+5: Este ejemplo es igual al 4, exceptuando que los delays se hacen usando xTaskDelayUntil. Esta función asegura que la tarea se vuelva a ejecutar después de vencido este tiempo. La cuenta se hace con cuentas de ticks.
+
+6: Uso de tareas periódicas: La forma de crear tareas periódicas es con la función "xTaskDelayUntil" que invoca a la tarea nuevamente recién después de pasado determinado tiempo. Para asegurar ese tiempo se pone la tarea con la prioridad más alta. Cuando se vence el timer la cpu se le entrega a la tarea. 
+
+7: Como en la config de FreeRTOS se configuró que USEIDLEHOOK 1, entonces se invoca a la función vApplicationIdleHook cada vez que se ejecuta la tarea IDLE
+
+8: Es un ejemplo con dos tareas una que enciende y otra que apaga el LED. La primer tarea invoca a la función uxTaskPriorityGet((xTaskHandle)NULL) que recibe su propia prioridad. Luego se invoca a vTaskPrioritySet(xTask2Handle, (uxPriority + 1)) la cual aumenta la prioridad de la tarea 2 en 1 nivel más que la propia. La tarea 2 lo mismo, solo que modifica su propia prioridad, poniendose por debajo de la tarea 1, con la función: vTaskPrioritySet((xTaskHandle)NULL, (uxPriority - 2)).
+
+9: Crea la tarea 1. Dentro de esta se crea a otra tarea 2. La tarea 2 tiene una prioridad superior a la de la tarea 1 ==> Se ejecuta siempre la tarea 2. La tarea 2 se destruye a sí misma, por lo que la tarea 1 puede proceder a ejecutarse nuevamente. Esta vuelve a ejecutarse y crea otra vez a la tarea 2 y así...
