@@ -1,5 +1,5 @@
-# Documentación del ejemplo 1
-## b)
+# 1.b)
+## Documentación del ejemplo 1
 
 Dentro del archivo se encuentran 9 ejemplos de FreeRTOS. Si bien cada uno cumple una función diferente, todos comparten ciertas características propias del uso del sistema operativo.
 
@@ -91,3 +91,66 @@ Para finalizar con el programa del ejemplo 1, se invoca a la función **vTaskSta
 </p>
 
 El **while(1)** solo se crea porque el programa va a estar gestionando e invocando a las diferentes tareas, es decir, no se realiza nada dentro del main.
+
+# 2.b)
+## Documentación del ejemplo 9
+
+El ejemplo 9 plantea un codigo con el objeto de borrar un task en tiempo de ejecucion.
+El codigo comienza definiendo tres punteros a char de entorno global (o tipo string) con los mensajes que posteriormente seran enviados por UART para ser vistos por el usuario.
+Uno imprime el titulo del codigo por unica vez y los otros cuando se llama al task correspondiente.
+Luego se definen los prototipos de los task utilizados en el codigo.
+Por ultimo se genera la variable global xTask2Handle. Dicha variable en el fondo es un puntero a void. Dicha variable se explicara cuando se utilize.
+Se observa el codigo en la figura X
+
+<p align="center">
+  <img src="img_pto_2/ex_9/1.PNG"/>
+</p>
+<p align="center">
+  Figura X: Variable globales y definicion iniciales
+</p>
+
+A continuacion se explicaran los task del codigo.
+
+La funcion vTask1 representa uno de los task (tareas) del codigo.
+Cuando la misma es llamada define un puntero a char que lo carga con el parametro de entrada pvParameters
+Basicamente como el prototipo de la funcion esta definido como un puntero a void este se debe castear explicitamente dentro de la funcion.
+Luego el task entra en un loop infinito dado por el while
+Dentro del while prendera un led, avisara por UART que tipo de task es y lo mas importante, creara un task nuevo.
+El task nuevo tendra prioridad 2 y ademas se le pasara como parametro la direccion de la variable global definida anteriomente xTask2Handle.
+Esta variable es un 'handler' (en castellano un manipulador) del task creado, basicamene es un puntero al task2.
+Luego el task1 termina bloqueandose por 100ms.
+
+
+<p align="center">
+  <img src="img_pto_2/ex_9/2.PNG"/>
+</p>
+<p align="center">
+  Figura X: Task 1
+</p>
+
+
+Por ende cuando se crea el task2 este se creara con prioridad mas alta y encima task1 estara bloqueado por tiempo. 
+Este conjunto de eventos hara que se ejecute task2 completamente antes de volver a ejecutar nuevamente el task1.
+
+La funcion creada vTask2 comienza similar a vTask1. Primero carga el parametro con el string y apaga el led que prendio vTask1.
+Luego saca por UART el nombre del task y un mensaje que se esta por borrar ella misma.
+Para borrarse utiliza vTaskDelete(xTask2Handle). A dicha funcion se le debe pasar como argumento un puntero al Task (el tipo de dato definido como 
+ TaskHandle) para que se borre del scheduler.
+
+<p align="center">
+  <img src="img_pto_2/ex_9/3.PNG"/>
+</p>
+<p align="center">
+  Figura X: Task 2
+</p>
+
+Por ultimo el main simplemente inicializa el hardware, imprime por UART el mensaje que esta en el main.
+Luego solo crea el vTask1 con prioridad menor y sin ningun handler para luego inicializar el Scheduler y quedarse en un loop infinito
+esperando ser cortado por los task.
+
+<p align="center">
+  <img src="img_pto_2/ex_9/4.PNG"/>
+</p>
+<p align="center">
+  Figura X: Main ejemplo 9
+</p>
