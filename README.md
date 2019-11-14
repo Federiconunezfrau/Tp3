@@ -171,7 +171,7 @@ En este ejemplo se dispara una interrupción via software activando un bit de un
 </p>
 
 
-## Tareas
+### Tareas
 Las tareas de este ejemplo se pueden ver en la figura X2.
 <p align="center">
   <img src="im_pto_12/tareas.png"/>
@@ -204,7 +204,7 @@ vHandlerTask: Es la tarea que se debe ejecutar como producto de la interrupción
 </p>
 
 
-## Función de interrupción:
+### Función de interrupción:
 
 La rutina de interrupción se puede ver en la figura X5.
 
@@ -227,7 +227,7 @@ De la documentación de FreeRTOS
 
 
 
-
+### Main
 La función main(), como en la mayoría de los ejemplos, se encarga de inicializar el hardware, crear las tareas e invocar al scheduler pero con el agregado de también configurar la prioridad de la interrupción DAC_IRQHandler llamando a la función prvSetupSoftwareInterrupt(). Dicha configuración se puede ver en la figura X6 y no es para FreeRTOS sino que es propia del microcontrolador (funciones del Nested Vectored Interrupt Controller).
 <p align="center">
   <img src="im_pto_12/InterruptSetup.png"/>
@@ -239,6 +239,6 @@ La función main(), como en la mayoría de los ejemplos, se encarga de inicializ
 
 
 [FALTA LA FOTITO CON EL GRAFICO DEL TIEMPO, VS TAREAS EJECUTADAS]
-[Cambiar el valor de la figura].
+[Cambiar el valor de la figuras].
 
 
