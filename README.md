@@ -162,27 +162,83 @@ esperando ser cortado por los task.
 El ejemplo 12 muestra como utilizar tareas que están relacionadas a una interupción. La idea principal es que dicha tarea tiene una prioridad elevada pero se encuentra pausada esperando un semáforo, el cual es dado en el handler de interrupción del microcontrolador. Es importante distinguir que no se ejecuta la tarea en la interrupción sino que lo único que se hace en la interrupción es avisar al sistema operativo que dicha tarea está lista, lo cual permite tener control de prioridades ya que se podría estar ejecutando una tarea crítica que no debe ser interumpida (el razón por la que el handler de interrupción también debe ser corto).
 
 En este ejemplo se dispara una interrupción via software activando un bit de uno de los registros del microcontrolador:
-[foto de bit de interrupt NVIC]
+<p align="center">
+  <img src="im_pto_12/BitDeInterrupt.png"/>
+</p>
 
-Tareas
-[foto de tareas]
+<p align="center">
+  Figura X1: Función donde se dispara manualmente la interrupción mediante software.
+</p>
+
+
+# Tareas
+Las tareas de este ejemplo se pueden ver en la figura X2.
+<p align="center">
+  <img src="im_pto_12/tareas.png"/>
+</p>
+
+<p align="center">
+  Figura X2: Tareas del ejemplo.
+</p>
+
 
 vPeriodicTask: Tarea que se ejecuta cada 500 ms y que lo único que hace es disparar la interrupción via software. Tiene prioridad baja (1).
+<p align="center">
+  <img src="im_pto_12/TareaMain.png"/>
+</p>
+
+<p align="center">
+  Figura X3: Tarea periódica.
+</p>
+
+
 
 vHandlerTask: Es la tarea que se debe ejecutar como producto de la interrupción. Para este ejemplo en particular lo único que hace es conmutar el estado de un LED y tomar el semáforo para ponerse en espera. Tiene una prioridad 3 tal que se ejecutará por encima de vPeriodicTask cuando esté habilitada.
 
+<p align="center">
+  <img src="im_pto_12/TAREAasocInterrup.png"/>
+</p>
 
-Función de interrupción:
-
-[foto de IRQhandler]
-vSoftwareInterruptHandler: es una macro que en realidad se define como DAC_IRQHandler, es decir es la rutina de interrupción asociada al DAC (cuya interrupción se activa por software en vPriodicTask). Lo que hace esta rutina de interrupción es dar el semáforo tal que habilite a vHandlerTask y forzar un cambio de contexto. El hecho de forzar el cambio de contexto puede hacer que la tarea se ejecute casi instantáneamente, casi como si fuera una interrupción, pero al estar bajo el control del sistema operativo puede que se deba esperar a que termine alguna otra tarea con mayor prioridad.
-El semáforo se da con la función xSemaphoreGiveFromISR, la cual difiere de xSemaphoreGive en que recibe un parámetro adicional llamado pxHigherPriorityTaskWoken, el cual es un puntero a alguna variable tal de poder avisar si hay alguna tarea con prioridad mayor a la tarea actual despertada por haber dado este semáforo. Es en este caso que se fuerza un cambio de contexto (si no se despertó nada no sería necesario). 
+<p align="center">
+  Figura X4: Tarea asociada a la interrupción.
+</p>
 
 
-La función main, como en la mayoría de los ejemplos, se encarga de inicializar el hardware, crear las tareas e invocar al scheduler pero con el agregado de también configurar la prioridad de la interrupción DAC_IRQHandler. Dicha configuración no es para FreeRTOS sino que es priopia del microcontrolador (funciones del Nested Vectored Interrupt Controller).
-[foto de interruptsetup, las que tienen NVIC]
+# Función de interrupción:
+
+La rutina de interrupción se puede ver en la figura X5.
+
+<p align="center">
+  <img src="im_pto_12/HandlerIRQ.png"/>
+</p>
+
+<p align="center">
+  Figura X5: Definición del handler de la interrupción.
+</p>
+
+vSoftwareInterruptHandler: es una macro que en realidad se define como DAC_IRQHandler, es decir es la rutina de interrupción asociada al DAC (cuya interrupción se activa por software en vPeriodicTask). Lo que hace esta rutina de interrupción es dar el semáforo tal que habilite a vHandlerTask y poder forzar un cambio de contexto. El hecho de forzar el cambio de contexto puede hacer que la tarea se ejecute casi instantáneamente, casi como si fuera una interrupción, pero al estar bajo el control del sistema operativo puede que se deba esperar a que termine alguna otra tarea con mayor prioridad.
+
+El semáforo se da con la función xSemaphoreGiveFromISR(), la cual difiere de xSemaphoreGive() en que recibe un parámetro adicional llamado pxHigherPriorityTaskWoken. Este parámetro es un puntero a una variable auxiliar tal de poder avisar si hay alguna tarea con prioridad mayor a la tarea actual despertada por haber dado este semáforo. Es en este caso que se fuerza un cambio de contexto (si no se despertó nada no sería necesario). 
+
+De la documentación de FreeRTOS
+>xSemaphoreGiveFromISR() will set *pxHigherPriorityTaskWoken to pdTRUE if giving the semaphore caused a task to unblock, and the >unblocked task has a priority higher than the currently running task. If xSemaphoreGiveFromISR() sets this value to pdTRUE then a >context switch should be requested before the interrupt is exited.
+
+
+
+
+
+
+La función main(), como en la mayoría de los ejemplos, se encarga de inicializar el hardware, crear las tareas e invocar al scheduler pero con el agregado de también configurar la prioridad de la interrupción DAC_IRQHandler llamando a la función prvSetupSoftwareInterrupt(). Dicha configuración se puede ver en la figura X6 y no es para FreeRTOS sino que es propia del microcontrolador (funciones del Nested Vectored Interrupt Controller).
+<p align="center">
+  <img src="im_pto_12/InterruptSetup.png"/>
+</p>
+
+<p align="center">
+  Figura X6: Configuración de la prioridad de la interrupción de NVIC.
+</p>
+
 
 [FALTA LA FOTITO CON EL GRAFICO DEL TIEMPO, VS TAREAS EJECUTADAS]
-
+[Cambiar el valor de la figura].
 
 
