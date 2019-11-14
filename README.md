@@ -95,7 +95,21 @@ El **while(1)** solo se crea porque el programa va a estar gestionando e invocan
 # 2.b)
 
 ## Documentación del ejemplo 6
-Acá va la documentación de este ejemplo
+
+Este ejemplo sirve para ilustrar cómo podrían implementarse tareas periódicas en conjunto con tareas de procesamiento continuo.
+Dentro del main se crean dos tareas de prioridad 1 y una tercera tarea de prioridad 2 y a todas se les asigna el tamaño mínimo de stack. Las primeras dos tareas son de procesamiento continuo y la tercera es periódica. 
+
+(ACÁ VA UNA IMAGEN QUE TODAVÍA NO CARGUÉ)
+
+Luego se inicia el scheduler.
+vContinuousProcessingTask y vPerioricTask se definen fuera del main.
+Al definir la tarea periódica se utiliza vTaskDelayUntil() para especificar el periodo con el cual se repetirá la tarea. Se utiliza la variable xLastWakeTime para guardar el tiempo de la última ejecución y en base a eso calcular cuando debería “despertarse” la tarea para volver a ejecutarse. Mientras se encuentra suspendida.
+
+(ACÁ VA UNA IMAGEN QUE TODAVÍA NO CARGUÉ)
+
+Cuando la tarea 3 esté “despierta”, el scheduler va a decidir ejecutarla por sobre las otras dos puesto que posee una prioridad más alta. En cambio, cuando la tarea 3 se encuentre suspendida el scheduler va a ir alternando entre las otras dos tareas porque éstas son de la misma prioridad.
+
+(ACÁ VA EL GRÁFICO TEMPORAL)
 
 ## Documentación del ejemplo 9
 
