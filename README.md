@@ -93,6 +93,10 @@ Para finalizar con el programa del ejemplo 1, se invoca a la función **vTaskSta
 El **while(1)** solo se crea porque el programa va a estar gestionando e invocando a las diferentes tareas, es decir, no se realiza nada dentro del main.
 
 # 2.b)
+
+## Documentación del ejemplo 6
+Acá va la documentación de este ejemplo
+
 ## Documentación del ejemplo 9
 
 El ejemplo 9 plantea un codigo con el objeto de borrar un task en tiempo de ejecucion.
