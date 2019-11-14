@@ -228,7 +228,7 @@ De la documentación de FreeRTOS
 
 
 ### Main
-La función main(), como en la mayoría de los ejemplos, se encarga de inicializar el hardware, crear las tareas e invocar al scheduler pero con el agregado de también configurar la prioridad de la interrupción DAC_IRQHandler llamando a la función prvSetupSoftwareInterrupt(). Dicha configuración se puede ver en la figura X6 y no es para FreeRTOS sino que es propia del microcontrolador (funciones del Nested Vectored Interrupt Controller).
+La función main(), como en la mayoría de los ejemplos, se encarga de inicializar el hardware, crear las tareas e invocar al scheduler pero con el agregado de también configurar la prioridad de la interrupción DAC_IRQHandler (cuyo ID está definido en mainSW_INTERRUPT_ID) llamando a la función prvSetupSoftwareInterrupt(). Dicha configuración se puede ver en la figura X6 y no es para FreeRTOS sino que es propia del microcontrolador (funciones del Nested Vectored Interrupt Controller).
 <p align="center">
   <img src="im_pto_12/InterruptSetup.png"/>
 </p>
