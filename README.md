@@ -171,8 +171,8 @@ En este ejemplo se dispara una interrupción via software activando un bit de un
 </p>
 
 
-### Tareas
-Las tareas de este ejemplo se pueden ver en la figura X2.
+### Funciones
+Las funciones a usar en este ejemplo se pueden ver en la figura X2.
 <p align="center">
   <img src="im_pto_12/tareas.png"/>
 </p>
@@ -181,6 +181,7 @@ Las tareas de este ejemplo se pueden ver en la figura X2.
   Figura X2: Tareas del ejemplo.
 </p>
 
+### Tareas
 
 vPeriodicTask: Tarea que se ejecuta cada 500 ms y que lo único que hace es disparar la interrupción via software. Tiene prioridad baja (1).
 <p align="center">
