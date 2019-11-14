@@ -171,7 +171,7 @@ En este ejemplo se dispara una interrupción via software activando un bit de un
 </p>
 
 
-# Tareas
+## Tareas
 Las tareas de este ejemplo se pueden ver en la figura X2.
 <p align="center">
   <img src="im_pto_12/tareas.png"/>
@@ -204,7 +204,7 @@ vHandlerTask: Es la tarea que se debe ejecutar como producto de la interrupción
 </p>
 
 
-# Función de interrupción:
+## Función de interrupción:
 
 La rutina de interrupción se puede ver en la figura X5.
 
